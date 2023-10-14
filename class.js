@@ -1,4 +1,4 @@
-class ProductManager{
+class Product{
 
     constructor(){
         this.products= [];
@@ -41,7 +41,7 @@ getProductById(code) {
 }
 }
 
-const Pmanager = new ProductManager();
+const Pmanager = new Product();
 Pmanager.addProduct("producto prueba","Este es un producto prueba",200,"sin imagen","abc123",25);
 Pmanager.getProducts();
 Pmanager.getProductById(1);
