@@ -7,7 +7,7 @@ class ProductManager {
     }
 
 
-    async addProduct(title, description, price, thumbnail, code, stock) {
+    async addProduct(title, description, price, thumbnail, code, stock, category) {
         const products = await getJsonFromFile(this.path);
         let pid = products.find(ide => ide.code === code);
         let counter = products.length;
@@ -15,7 +15,7 @@ class ProductManager {
         if (pid) {
             console.log(" the product with the code " + code + " already exists")
             return
-        } else if (!title || !description || !price || !thumbnail || !stock) {
+        } else if (!title || !description || !price || !thumbnail || !stock || !category) {
             console.log("Please fill all entries");
         } else {
             const newProduct = {
@@ -24,7 +24,9 @@ class ProductManager {
                 price,
                 thumbnail,
                 code,
+                status: true,
                 stock,
+                category,
                 id: counter + init,
 
             }
@@ -67,6 +69,9 @@ class ProductManager {
             else if (change === 'code') {
                 product.code = value;
                 await saveJsonInFile(this.path, products);
+            }else if (change === 'status') {
+                product.stock = value;
+                await saveJsonInFile(this.path, products);
             }
             else if (change === 'thumbnail') {
                 product.thumbnail = value;
@@ -74,7 +79,11 @@ class ProductManager {
             } else if (change === 'stock') {
                 product.stock = value;
                 await saveJsonInFile(this.path, products);
-            } else {
+            } else if (change === 'category') {
+                product.stock = value;
+                await saveJsonInFile(this.path, products);
+            }
+            else {
                 console.log('please enter a valid property to change such as title,description,price,thumbnail,stock ')
             }
 
@@ -113,34 +122,34 @@ const saveJsonInFile = (path, data) => {
 
 
 
-// async function test() {
-//     const Pmanager = new ProductManager('Products.js');
-//     await Pmanager.addProduct('producto prueba', 'Este es un producto prueba', 200, 'Sin imagen', 'abc123', 25);
-//     await Pmanager.getProducts();
-//     await Pmanager.updateProduct('abc1230', 'title', 'producto actualizado');
-//     await Pmanager.getProducts();
-//     await Pmanager.getProductById(1);
-//     await Pmanager.addProduct('producto prueba ', 'Este es un producto prueba', 200, 'Sin imagen', 'abc123', 25);
-//     await Pmanager.deleteProduct(1);
-//     await Pmanager.addProduct('producto prueba 1', 'Este es un producto prueba', 200, 'Sin imagen', 'a1', 24);
-//     await Pmanager.addProduct('producto prueba 2', 'Este es un producto prueba', 200, 'Sin imagen', 'a2', 23);
-//     await Pmanager.addProduct('producto prueba 3', 'Este es un producto prueba', 200, 'Sin imagen', 'a3', 22);
-//     await Pmanager.addProduct('producto prueba 4', 'Este es un producto prueba', 200, 'Sin imagen', 'a4', 21);
-//     await Pmanager.addProduct('producto prueba 5', 'Este es un producto prueba', 200, 'Sin imagen', 'a5', 20);
-//     await Pmanager.addProduct('producto prueba 6', 'Este es un producto prueba', 200, 'Sin imagen', 'a6', 19);
-//     await Pmanager.addProduct('producto prueba 7', 'Este es un producto prueba', 200, 'Sin imagen', 'a7', 18);
-//     await Pmanager.addProduct('producto prueba 8', 'Este es un producto prueba', 200, 'Sin imagen', 'a8', 17);
-//     await Pmanager.addProduct('producto prueba 9', 'Este es un producto prueba', 200, 'Sin imagen', 'a9', 16);
-//     await Pmanager.addProduct('producto prueba 10', 'Este es un producto prueba', 200, 'Sin imagen', 'a10', 16);
+//   async function test() {
+//    const Pmanager = new ProductManager('Products.js');
+//    await Pmanager.addProduct('test product', 'This is a test product', 200, ['No image'], 'abc123', 25,'test');
+//    await Pmanager.getProducts();
+//    await Pmanager.updateProduct('abc1230', 'title', 'producto actualizado');
+//    await Pmanager.getProducts();
+//    await Pmanager.getProductById(1);
+//    await Pmanager.addProduct('test product ', 'This is a test product', 200, ['No image'], 'abc123', 25,'test');
+//    await Pmanager.deleteProduct(1);
+//    await Pmanager.addProduct('Arnotta', 'Fungus 1', 200, ['No image'], 'o1', 24,'fungi');
+//    await Pmanager.addProduct('Mushroom', 'Fungus 2', 150, ['No image'], 'c2', 23,'fungi');
+//    await Pmanager.addProduct('Shiitake', 'Fungus 3', 350, ['No image'], 's3', 22,'fungi');
+//    await Pmanager.addProduct('Porcini', 'Fungus 4', 300, ['No image'], 'p4', 21,'fungi');
+//    await Pmanager.addProduct('Enoki', 'Fungus 5', 320, ['No image'], 'e5', 20,'fungi');
+//    await Pmanager.addProduct('Trufa', 'Fungus 6', 500, ['No image'], 't6', 19,'fungi');
+//    await Pmanager.addProduct('Huitlacoche', 'Fungus 7', 400, ['No image'], 'h7', 18,'fungi');
+//    await Pmanager.addProduct('Matsutake', 'Fungus 8', 450, ['No image'], 'm8', 17,'fungi');
+//     await Pmanager.addProduct('Portobello', 'Fungus 9', 280, ['No image'], 'p9', 16,'fungi');
+//    await Pmanager.addProduct('Gírgola', 'Fungus 10', 200, ['No image'], 'g10', 16,'fungi');
     
-//     if (!Pmanager.getProducts()) {
-//         console.log('there are no products')
-//     } else {
+//      if (!Pmanager.getProducts()) {
+//       console.log('there are no products')
+//    } else {
 //         await Pmanager.getProducts();
 //     }
 
-// }
+//  }
 
-//test();
+// test();
 
 module.exports= ProductManager

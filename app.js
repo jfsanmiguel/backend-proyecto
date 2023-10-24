@@ -1,13 +1,15 @@
 
 const express = require('express');
-const ProductManager=require('./ProductManager.js');
-const productmanager=new ProductManager('./Products.js');
+const ProductManager=require('./src/ProductManager.js');
+const productmanager=new ProductManager('./src/Products.js');
 
 const app = express();
-app.use(express.urlencoded({ extended: true }))
+const PORT=8080;
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    res.send('Product Manager');
+    res.status(200).json({message: "Welcome to Fungstore"})
 })
 app.get('/products', (req, res) => {
     const { query } = req;
@@ -38,6 +40,6 @@ app.get('/products/:productId', (req, res) => {
     run();
 });
 
-app.listen(8080, () => {
-    console.log('server listening to port 8080');
+app.listen(PORT, () => {
+    console.log(`Server running in http://localhost:${PORT}`);
 });
