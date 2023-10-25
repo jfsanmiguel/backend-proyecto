@@ -10,7 +10,6 @@ class ProductManager {
     async addProduct(title, description, price, thumbnail, code, stock, category) {
         const products = await getJsonFromFile(this.path);
         let pid = products.find(ide => ide.code === code);
-        let counter = products.length;
         let init=1;
         if (pid) {
             console.log(" the product with the code " + code + " already exists")
@@ -27,7 +26,7 @@ class ProductManager {
                 status: true,
                 stock,
                 category,
-                id: counter + init,
+                id: Date.now()+ init,
 
             }
             products.push(newProduct);
@@ -70,17 +69,18 @@ class ProductManager {
                 product.code = value;
                 await saveJsonInFile(this.path, products);
             }else if (change === 'status') {
-                product.stock = value;
+                product.status = value;
                 await saveJsonInFile(this.path, products);
             }
             else if (change === 'thumbnail') {
                 product.thumbnail = value;
                 await saveJsonInFile(this.path, products);
-            } else if (change === 'stock') {
+            }
+            else if (change === 'stock') {
                 product.stock = value;
                 await saveJsonInFile(this.path, products);
             } else if (change === 'category') {
-                product.stock = value;
+                product.category = value;
                 await saveJsonInFile(this.path, products);
             }
             else {
@@ -123,33 +123,33 @@ const saveJsonInFile = (path, data) => {
 
 
 //   async function test() {
-//    const Pmanager = new ProductManager('Products.js');
-//    await Pmanager.addProduct('test product', 'This is a test product', 200, ['No image'], 'abc123', 25,'test');
-//    await Pmanager.getProducts();
-//    await Pmanager.updateProduct('abc1230', 'title', 'producto actualizado');
-//    await Pmanager.getProducts();
-//    await Pmanager.getProductById(1);
-//    await Pmanager.addProduct('test product ', 'This is a test product', 200, ['No image'], 'abc123', 25,'test');
-//    await Pmanager.deleteProduct(1);
-//    await Pmanager.addProduct('Arnotta', 'Fungus 1', 200, ['No image'], 'o1', 24,'fungi');
-//    await Pmanager.addProduct('Mushroom', 'Fungus 2', 150, ['No image'], 'c2', 23,'fungi');
-//    await Pmanager.addProduct('Shiitake', 'Fungus 3', 350, ['No image'], 's3', 22,'fungi');
-//    await Pmanager.addProduct('Porcini', 'Fungus 4', 300, ['No image'], 'p4', 21,'fungi');
-//    await Pmanager.addProduct('Enoki', 'Fungus 5', 320, ['No image'], 'e5', 20,'fungi');
-//    await Pmanager.addProduct('Trufa', 'Fungus 6', 500, ['No image'], 't6', 19,'fungi');
-//    await Pmanager.addProduct('Huitlacoche', 'Fungus 7', 400, ['No image'], 'h7', 18,'fungi');
-//    await Pmanager.addProduct('Matsutake', 'Fungus 8', 450, ['No image'], 'm8', 17,'fungi');
-//     await Pmanager.addProduct('Portobello', 'Fungus 9', 280, ['No image'], 'p9', 16,'fungi');
-//    await Pmanager.addProduct('Gírgola', 'Fungus 10', 200, ['No image'], 'g10', 16,'fungi');
+//  const Pmanager = new ProductManager('Products.js');
+//  await Pmanager.addProduct('test product', 'This is a test product', 200, ['No image'], 'abc123', 25,'test');
+// await Pmanager.getProducts();
+// await Pmanager.updateProduct('abc1230', 'title', 'producto actualizado');
+// await Pmanager.getProducts();
+// await Pmanager.getProductById(1);
+// await Pmanager.addProduct('test product ', 'This is a test product', 200, ['No image'], 'abc123', 25,'test');
+// await Pmanager.deleteProduct(1);
+// await Pmanager.addProduct('Arnotta', 'Fungus 1', 200, ['No image'], 'o1', 24,'fungi');
+// await Pmanager.addProduct('Mushroom', 'Fungus 2', 150, ['No image'], 'c2', 23,'fungi');
+// await Pmanager.addProduct('Shiitake', 'Fungus 3', 350, ['No image'], 's3', 22,'fungi');
+// await Pmanager.addProduct('Porcini', 'Fungus 4', 300, ['No image'], 'p4', 21,'fungi');
+// await Pmanager.addProduct('Enoki', 'Fungus 5', 320, ['No image'], 'e5', 20,'fungi');
+// await Pmanager.addProduct('Trufa', 'Fungus 6', 500, ['No image'], 't6', 19,'fungi');
+// await Pmanager.addProduct('Huitlacoche', 'Fungus 7', 400, ['No image'], 'h7', 18,'fungi');
+// await Pmanager.addProduct('Matsutake', 'Fungus 8', 450, ['No image'], 'm8', 17,'fungi');
+// await Pmanager.addProduct('Portobello', 'Fungus 9', 280, ['No image'], 'p9', 16,'fungi');
+// await Pmanager.addProduct('Gírgola', 'Fungus 10', 200, ['No image'], 'g10', 16,'fungi');
     
-//      if (!Pmanager.getProducts()) {
-//       console.log('there are no products')
-//    } else {
+// if (!Pmanager.getProducts()) {
+//  console.log('there are no products')
+// } else {
 //         await Pmanager.getProducts();
-//     }
+// }
 
 //  }
 
-// test();
+//  test();
 
 module.exports= ProductManager
